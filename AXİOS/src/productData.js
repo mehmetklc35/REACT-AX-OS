@@ -1,4 +1,4 @@
-export const data = [
+const productData = [
   {
     id: 1,
     name: "Prenses Model Gelinlik",
@@ -110,3 +110,5 @@ export const data = [
     category: "Uzun Kollu",
   },
 ];
+
+export default productData;
