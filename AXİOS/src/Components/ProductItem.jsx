@@ -2,7 +2,7 @@ const ProductItem = ({ product }) => {
   return (   
     <div className="border p-4 m-2 rounded-lg shadow-lg">
       <img
-        className="w-full h-48 object-cover rounded-t-lg"
+        className="w-full h-120 object-cover rounded-t-lg bg-opacity-50"
         src={product.imageUrl}
         alt="Zarif A Kesim"
       />
