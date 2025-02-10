@@ -19,7 +19,7 @@ Yapılması gereken işlemler:
 
 - ![image](https://github.com/user-attachments/assets/d88c02d7-44cd-45d7-9894-601c97934aa0)
 
-- Step step gitmek mantıklı abi önce yapman gereken
+- Step step gitmek mantıklı önce yapman gereken
 - 1- Verileri map ile listelemek (Colors & Sizes)
 - 2- Verileri css ile güzelleştirmek
 - 3- Verileri filtrelemek

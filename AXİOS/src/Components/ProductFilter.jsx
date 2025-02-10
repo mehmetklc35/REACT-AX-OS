@@ -1,0 +1,88 @@
+import { useState } from "react";
+import productData from "../productData";
+import ProductItem from "./ProductItem";
+
+const ProductFilter = () => {
+  const [filteredProducts, setFilteredProducts] = useState(productData);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const filterByCategory = (category) => {
+    const filtered = productData.filter(
+      (product) => product.category === category
+    );
+    setFilteredProducts(filtered);
+  };
+
+  const showAllProducts = () => {
+    setFilteredProducts(productData);
+  };
+
+  const handleSearch = (event) => {
+    const term = event.target.value.toLowerCase();
+    setSearchTerm(term);
+
+    const filtered = productData.filter(
+      (product) =>
+        product.name.toLowerCase().includes(term) ||
+        product.category.toLowerCase().includes(term)
+    );
+    setFilteredProducts(filtered);
+  };
+
+  return (
+    <div className="container mx-auto p-6">
+      <input
+        type="text"
+        placeholder="Gelinlik ara..."
+        value={searchTerm}
+        onChange={handleSearch}
+        className="w-full p-2 border border-gray-300 rounded-lg mb-4"
+      />
+      <div className="flex flex-wrap gap-2 mb-4">
+        <button
+          className="bg-orange-500 text-white font-bold px-4 py-2 rounded-lg hover:bg-orange-600"
+          onClick={() => filterByCategory("A Kesim")}
+        >
+          A Kesim
+        </button>
+        <button
+          className="bg-orange-500 text-white font-bold px-4 py-2 rounded-lg hover:bg-orange-600"
+          onClick={() => filterByCategory("Vintage")}
+        >
+          Vintage
+        </button>
+        <button
+          className="bg-orange-500 text-white font-bold px-4 py-2 rounded-lg hover:bg-orange-600"
+          onClick={() => filterByCategory("Prenses")}
+        >
+          Prenses
+        </button>
+        <button
+          className="bg-orange-500 text-white font-bold px-4 py-2 rounded-lg hover:bg-orange-600"
+          onClick={() => filterByCategory("Uzun Kollu")}
+        >
+          Uzun Kollu
+        </button>
+        <button
+          className="bg-orange-500 text-white font-bold px-4 py-2 rounded-lg hover:bg-orange-600"
+          onClick={showAllProducts}
+        >
+          Tüm Ürünler
+        </button>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {filteredProducts.length > 0 ? (
+          filteredProducts.map((product) => (
+            <ProductItem key={product.id} product={product} />
+          ))
+        ) : (
+          <p className="col-span-full text-center text-xl text-red-500">
+            Hiç ürün bulunamadı
+          </p>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default ProductFilter;
