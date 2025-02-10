@@ -4,7 +4,7 @@ const ProductItem = ({ product }) => {
       <img
         className="w-full h-120 object-cover rounded-t-lg bg-opacity-50"
         src={product.imageUrl}
-        alt="Zarif A Kesim"
+        alt={product.name}
       />
       <div className="p-4">
         <h2 className="text-xl font-bold mb-2">{product.name}</h2>
