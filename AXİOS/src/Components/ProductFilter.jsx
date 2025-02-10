@@ -4,7 +4,7 @@ import ProductItem from "./ProductItem";
 
 const ProductFilter = () => {
   const [filteredProducts, setFilteredProducts] = useState(productData);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");  
 
   const filterByCategory = (category) => {
     const filtered = productData.filter(
