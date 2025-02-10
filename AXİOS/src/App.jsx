@@ -1,4 +1,4 @@
-import Header from "./components/Header";
+import Header from "./Components/Header";
 import ProductFilter from "./Components/ProductFilter";
 
 function App() {
