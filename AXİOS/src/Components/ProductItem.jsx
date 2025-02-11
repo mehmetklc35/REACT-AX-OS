@@ -1,4 +1,9 @@
+import { useState } from "react";
+import { useCart } from "../Context/CartContext";
+
 const ProductItem = ({ product }) => {
+  const { addToCart } = useCart();
+
   const {
     name,
     imageUrl,
@@ -9,6 +14,18 @@ const ProductItem = ({ product }) => {
     stock,
   } = product;
 
+  const [selectedSize, setSelectedSize] = useState(sizeOptions[0] || "");
+  const [selectedColor, setSelectedColor] = useState(colorOptions[0] || "");
+
+  const handleAddToCart = () => {
+    if (!selectedSize || !selectedColor) {
+      alert("Lütfen beden ve renk seçiniz!");
+      return;
+    }
+    addToCart(product, selectedSize, selectedColor);
+    alert("Ürün sepete eklendi! 🛒");
+  };
+
   return (
     <div className="border p-4 m-2 rounded-lg shadow-lg">
       <img
@@ -18,16 +35,25 @@ const ProductItem = ({ product }) => {
       />
       <div className="p-4">
         <h2 className="text-xl font-bold mb-2">{name}</h2>
-        <p className="text-amber-600 italic border-l-4 border-amber-400 pl-3 mb-3">{description}</p>
+        <p className="text-amber-600 italic border-l-4 border-amber-400 pl-3 mb-3">
+          {description}
+        </p>
         {colorOptions && colorOptions.length > 0 && (
           <div className="flex items-center gap-2 my-2">
             <strong>Renk:</strong>
             {colorOptions.map((color, index) => (
-              <span key={index} className="px-2 py-1 border rounded-lg text-sm bg-gray-200 
-              transition-all duration-200 cursor-pointer 
-              hover:bg-amber-500 hover:text-white">
+              <button
+                key={index}
+                onClick={() => setSelectedColor(color)}
+                className={`px-2 py-1 border rounded-lg text-sm transition-all duration-200 cursor-pointer 
+                ${
+                  selectedColor === color
+                    ? "bg-amber-400 text-white"
+                    : "bg-gray-200"
+                }`}
+              >
                 {color}
-              </span>
+              </button>
             ))}
           </div>
         )}
@@ -35,27 +61,36 @@ const ProductItem = ({ product }) => {
           <div className="flex items-center gap-2 my-2">
             <strong>Beden:</strong>
             {sizeOptions.map((size, index) => (
-              <span
+              <button
                 key={index}
-                className="px-2 py-1 border rounded-lg text-sm bg-gray-200 
-              transition-all duration-200 cursor-pointer 
-              hover:bg-amber-500 hover:text-white"
+                onClick={() => setSelectedSize(size)}
+                className={`px-2 py-1 border rounded-lg text-sm transition-all duration-200 cursor-pointer 
+                ${
+                  selectedSize === size
+                    ? "bg-amber-400 text-white"
+                    : "bg-gray-200 "
+                }`}
               >
                 {size}
-              </span>
+              </button>
             ))}
           </div>
         )}
         <p className="py-3 font-semibold text-lg">
           <strong>Fiyat:</strong> {price} TL
         </p>
-        <p className="text-gray-600">
+        <p
+          className={`text-sm font-medium ${
+            stock > 0 ? "text-gray-600" : "text-red-500"
+          }`}
+        >
           <strong>Stok:</strong>{" "}
           {stock > 0 ? `${stock} adet mevcut` : "Stokta yok"}
         </p>
         <button
-          className="bg-amber-400 text-white px-4 py-2 rounded-lg w-full hover:bg-amber-500 mt-3"
-          disabled={stock === 0}
+          onClick={handleAddToCart}
+          className={`w-full mt-3 px-4 py-2 rounded-lg text-white font-bold ${stock > 0 ? "bg-amber-400 hover:bg-amber-500" : "bg-gray-400 cursor-not-allowed"}`}
+          disabled={stock === 0}          
         >
           {stock > 0 ? "Sepete Ekle" : "Tükendi"}
         </button>
